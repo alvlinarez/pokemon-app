@@ -15,6 +15,6 @@ export interface CollectionRequest extends Request {
 export interface UserRequest extends Request {
   user?: {
     userId: string;
-    email: string;
+    username: string;
   };
 }

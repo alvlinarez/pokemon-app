@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 
 export interface IUser extends Document {
   _id: Types.ObjectId;
+  username: string;
   email: string;
   password: string;
   createdAt: Date;
@@ -12,6 +13,14 @@ export interface IUser extends Document {
 
 const UserSchema = new Schema<IUser>(
   {
+    username: {
+      type: String,
+      required: [true, 'Username is required'],
+      unique: true,
+      trim: true,
+      minLength: [3, 'Username must be at least 3 characters'],
+      maxLength: [20, 'Username cannot exceed 20 characters'],
+    },
     email: {
       type: String,
       required: [true, 'Email is required'],

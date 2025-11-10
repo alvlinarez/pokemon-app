@@ -5,29 +5,32 @@ import { UserRequest } from '../types';
 
 export const register = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { email, password } = req.body;
+    const { username, email, password } = req.body;
 
-    if (!email || !password) {
+    if (!username || !email || !password) {
       res.status(400).json({
-        message: 'Please provide email, and password',
+        success: false,
+        message: 'Please provide username, email, and password',
       });
       return;
     }
 
     // Check if user already exists
     const existingUser = await User.findOne({
-      $or: [{ email }],
+      $or: [{ username }, { email }],
     });
 
     if (existingUser) {
       res.status(400).json({
-        message: 'User with this email already exists',
+        success: false,
+        message: 'User with this email or username already exists',
       });
       return;
     }
 
     // Create user
     const user = await User.create({
+      username,
       email,
       password,
     });
@@ -35,22 +38,25 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     // Generate token
     const token = generateToken({
       userId: user._id.toString(),
-      email: user.email,
+      username: user.username,
     });
 
     // Set cookie
     setTokenCookie(res, token);
 
     res.status(201).json({
+      success: true,
       message: 'User registered successfully',
       user: {
         id: user._id,
+        username: user.username,
         email: user.email,
       },
     });
   } catch (error: any) {
     console.error('Register error:', error);
     res.status(500).json({
+      success: false,
       message: 'Error registering user',
       error: error.message,
     });
@@ -59,22 +65,24 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 
 export const login = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
     // Validate input
-    if (!email || !password) {
+    if (!username || !password) {
       res.status(400).json({
-        message: 'Please provide email and password',
+        success: false,
+        message: 'Please provide username and password',
       });
       return;
     }
 
     // Find user and include password field
-    const user = await User.findOne({ email }).select('+password');
+    const user = await User.findOne({ username }).select('+password');
 
     if (!user) {
       res.status(401).json({
-        message: 'Invalid email or password',
+        success: false,
+        message: 'Invalid username or password',
       });
       return;
     }
@@ -84,7 +92,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
     if (!isPasswordValid) {
       res.status(401).json({
-        message: 'Invalid email or password',
+        message: 'Invalid username or password',
       });
       return;
     }
@@ -92,22 +100,24 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     // Generate token
     const token = generateToken({
       userId: user._id.toString(),
-      email: user.email,
+      username: user.username,
     });
 
     // Set cookie
     setTokenCookie(res, token);
 
     res.status(200).json({
+      success: true,
       message: 'Login successful',
       user: {
         id: user._id,
-        email: user.email,
+        username: user.username,
       },
     });
   } catch (error: any) {
     console.error('Login error:', error);
     res.status(500).json({
+      success: false,
       message: 'Error logging in',
       error: error.message,
     });
@@ -119,11 +129,13 @@ export const logout = async (req: Request, res: Response): Promise<void> => {
     clearTokenCookie(res);
 
     res.status(200).json({
+      success: true,
       message: 'Logout successful',
     });
   } catch (error: any) {
     console.error('Logout error:', error);
     res.status(500).json({
+      success: false,
       message: 'Error logging out',
       error: error.message,
     });
@@ -136,21 +148,25 @@ export const getMe = async (req: UserRequest, res: Response): Promise<void> => {
 
     if (!user) {
       res.status(404).json({
+        success: false,
         message: 'User not found',
       });
       return;
     }
 
     res.status(200).json({
+      success: true,
       user: {
         id: user._id,
         email: user.email,
+        username: user.username,
         createdAt: user.createdAt,
       },
     });
   } catch (error: any) {
     console.error('Get me error:', error);
     res.status(500).json({
+      success: false,
       message: 'Error fetching user data',
       error: error.message,
     });

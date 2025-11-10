@@ -32,7 +32,7 @@ export const authenticate = async (req: UserRequest, res: Response, next: NextFu
     // Attach user to request
     req.user = {
       userId: decoded.userId,
-      email: decoded.email,
+      username: decoded.username,
     };
 
     next();
