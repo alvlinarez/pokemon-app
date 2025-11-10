@@ -21,8 +21,8 @@ export function filterCollection({ body, results }: FilterCollectionProps): Name
   if (sortBy) {
     if (sortBy === 'order') {
       res = res.sort((a, b) => {
-        const orderA = Number(a.url.split('/')[6]);
-        const orderB = Number(b.url.split('/')[6]);
+        const orderA = Number(a.url.split('/').pop());
+        const orderB = Number(b.url.split('/').pop());
         return sortDescending ? orderB - orderA : orderA - orderB;
       });
     }

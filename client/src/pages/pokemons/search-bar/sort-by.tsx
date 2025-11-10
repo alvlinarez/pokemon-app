@@ -34,7 +34,7 @@ export function SortBy() {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
       >
-        {sortBy === 'number' ? <Img src={tagImg} alt="TagImg" /> : <Img src={textFormatImg} alt="TagImg" />}
+        {sortBy === 'order' ? <Img src={tagImg} alt="TagImg" /> : <Img src={textFormatImg} alt="TagImg" />}
       </Fab>
 
       <Menu
@@ -72,7 +72,7 @@ export function SortBy() {
                 onChange={handleSortClick}
               >
                 <FormControlLabel
-                  value="number"
+                  value="order"
                   control={
                     <Radio
                       sx={{

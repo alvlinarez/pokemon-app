@@ -4,6 +4,8 @@ import type { SortBy } from '../types';
 interface IPokemonSearchContext {
   search: string;
   sortBy: SortBy;
+  page: number;
+  updatePage: (value: number) => void;
   updateSearch: (value: string) => void;
   updateSortBy: (value: SortBy) => void;
 }

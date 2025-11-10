@@ -1,14 +1,21 @@
 import { Box, InputAdornment, TextField } from '@mui/material';
 import { Img } from '../../../components';
 import searchImg from '../../../assets/search.svg';
+import { usePokemonSearch } from '../../../context';
 
 export function Search() {
+  const { search, updateSearch } = usePokemonSearch();
+
   return (
     <Box sx={{ width: '100%' }}>
       <TextField
         id="search"
         placeholder={'Search'}
         variant="standard"
+        value={search}
+        onChange={(event) => {
+          updateSearch(event.target.value);
+        }}
         sx={{
           backgroundColor: 'white',
           borderRadius: '16px',
