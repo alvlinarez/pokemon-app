@@ -1,6 +1,7 @@
 import { Box, Grid, Paper, Stack, Typography } from '@mui/material';
 import silhouette from '../../assets/silhouette.png';
 import { Img } from '../index.ts';
+import { PAGE_SIZE } from '../../constants';
 
 function PokemonSkeleton() {
   return (
@@ -40,8 +41,8 @@ function PokemonSkeleton() {
 export function PokemonListSkeleton() {
   return (
     <Grid container spacing={2}>
-      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((pokemon) => (
-        <PokemonSkeleton key={pokemon} />
+      {[...new Array(PAGE_SIZE)].map((_, index) => (
+        <PokemonSkeleton key={index} />
       ))}
     </Grid>
   );
