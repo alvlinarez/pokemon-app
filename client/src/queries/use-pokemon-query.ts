@@ -10,7 +10,7 @@ interface UsePokemonQueryProps {
 }
 export function usePokemonQuery({ query, request }: UsePokemonQueryProps) {
   const { pokemonService } = useService();
-  const { data, isFetching, isLoading, isError, error } = useQuery<PokemonResponse, Error>({
+  const { data, isFetching, isLoading, isSuccess, isError, error } = useQuery<PokemonResponse, Error>({
     queryKey: [QUERY_KEYS.pokemons, query, request],
     queryFn: () =>
       pokemonService.getPokemons({
@@ -30,5 +30,6 @@ export function usePokemonQuery({ query, request }: UsePokemonQueryProps) {
     data,
     isFetching,
     isLoading,
+    isSuccess,
   } as const;
 }

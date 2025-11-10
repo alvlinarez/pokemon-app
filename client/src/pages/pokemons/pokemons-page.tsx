@@ -6,12 +6,13 @@ import { PokemonPagination } from './pokemon-pagination';
 import { usePokemonSearch } from '../../context';
 import { useDebounce } from '../../hooks';
 import { usePokemonQuery } from '../../queries';
+import { PokemonListSkeleton } from '../../components';
 
 export function PokemonsPage() {
   const { search, page, sortBy } = usePokemonSearch();
   const debouncedSearch = useDebounce(search, 300);
 
-  const { data } = usePokemonQuery({
+  const { data, isLoading, isFetching, isSuccess } = usePokemonQuery({
     query: debouncedSearch,
     request: {
       page,
@@ -38,9 +39,9 @@ export function PokemonsPage() {
           },
         }}
       >
-        <PokemonList pokemons={data.data} />
+        {isLoading || isFetching ? <PokemonListSkeleton /> : isSuccess ? <PokemonList pokemons={data.data} /> : null}
 
-        <PokemonPagination pageCount={data.pageCount} />
+        {!search && <PokemonPagination pageCount={data.pageCount} />}
       </Stack>
     </Container>
   );
