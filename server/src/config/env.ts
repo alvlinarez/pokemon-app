@@ -8,6 +8,7 @@ interface IConfig {
   pokemonApiUrl: string;
   clientUrl: string;
   dbUri: string;
+  dbName: string;
   jwtSecret: string;
 }
 
@@ -16,6 +17,7 @@ const env: IConfig = {
   nodeEnv: process.env.NODE_ENV || 'development',
   clientUrl: process.env.CLIENT_URL || 'http://localhost:5173',
   dbUri: process.env.DB_URI || 'mongodb://localhost:27017',
+  dbName: process.env.DB_NAME || 'test',
   pokemonApiUrl: process.env.POKEMON_API_URL || 'https://pokeapi.co/api/v2',
   jwtSecret: process.env.JWT_SECRET || '',
 };
