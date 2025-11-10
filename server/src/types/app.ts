@@ -11,3 +11,10 @@ export interface CollectionBody {
 export interface CollectionRequest extends Request {
   body: CollectionBody;
 }
+
+export interface UserRequest extends Request {
+  user?: {
+    userId: string;
+    email: string;
+  };
+}
