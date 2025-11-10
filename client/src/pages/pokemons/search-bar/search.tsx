@@ -14,7 +14,7 @@ export function Search() {
         variant="standard"
         value={search}
         onChange={(event) => {
-          updateSearch(event.target.value);
+          updateSearch(event.target.value.trim().toLowerCase());
         }}
         sx={{
           backgroundColor: 'white',

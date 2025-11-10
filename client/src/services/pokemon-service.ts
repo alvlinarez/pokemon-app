@@ -1,5 +1,5 @@
 import type { AxiosInstance } from 'axios';
-import type { CollectionBody, GetPokemonsProps, IPokemonService, PokemonResponse } from '../types';
+import type { CollectionBody, GetPokemonProps, GetPokemonsProps, IPokemonService, Pokemon, PokemonResponse } from '../types';
 
 export class PokemonService implements IPokemonService {
   constructor(private httpClient: AxiosInstance) {}
@@ -16,5 +16,11 @@ export class PokemonService implements IPokemonService {
       data: res.data.data,
       pageCount: res.data.pageCount,
     };
+  }
+
+  async getPokemonById({ id }: GetPokemonProps): Promise<Pokemon> {
+    const res = await this.httpClient.get(`/pokemons/${id}`);
+
+    return res.data as Pokemon;
   }
 }

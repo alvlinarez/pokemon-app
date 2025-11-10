@@ -1,4 +1,4 @@
-import type { PokemonResponse } from './pokemon.ts';
+import type { Pokemon, PokemonResponse } from './pokemon';
 
 export interface CollectionBody {
   pageSize?: number;
@@ -13,6 +13,11 @@ export interface GetPokemonsProps {
   request?: Omit<CollectionBody, 'filterBy'>;
 }
 
+export interface GetPokemonProps {
+  id: string;
+}
+
 export interface IPokemonService {
   getPokemons(props: GetPokemonsProps): Promise<PokemonResponse>;
+  getPokemonById(props: GetPokemonProps): Promise<Pokemon>;
 }

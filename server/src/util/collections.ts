@@ -14,7 +14,7 @@ export function filterCollection({ body, results }: FilterCollectionProps): { po
   res = filterBy
     ? results.filter((r) => {
         const id = r.url.split('/').pop();
-        return (isNaN(Number(filterBy)) && r.name.includes(filterBy)) || id === filterBy;
+        return (isNaN(Number(filterBy)) && r.name.includes(filterBy.toLowerCase())) || id === filterBy;
       })
     : results;
 
