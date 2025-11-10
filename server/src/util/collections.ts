@@ -1,5 +1,5 @@
 import { CollectionBody } from '../types';
-import { NamedAPIResource } from '../models';
+import { NamedAPIResource, Pokemon, PokemonApi } from '../models';
 import { PAGE, PAGE_SIZE } from '../constants/collections';
 
 interface FilterCollectionProps {
@@ -63,4 +63,47 @@ function validateBody(body?: Partial<CollectionBody>) {
     sortDescending,
     filterBy,
   };
+}
+
+export async function mapNamedApiCollectionToPokemon(namedAPIResources: NamedAPIResource[]) {
+  const res: Pokemon[] = [];
+
+  for (const item of namedAPIResources) {
+    const response = await fetch(item.url);
+    const pokemonListResponse = (await response.json()) as PokemonApi;
+
+    const pokemon: Pokemon = {
+      id: pokemonListResponse.id,
+      name: pokemonListResponse.name,
+      baseExperience: pokemonListResponse.base_experience,
+      height: pokemonListResponse.height,
+      weight: pokemonListResponse.weight,
+      order: pokemonListResponse.order,
+      abilities: pokemonListResponse.abilities,
+      species: pokemonListResponse.species,
+      stats: pokemonListResponse.stats,
+      types: pokemonListResponse.types,
+      imageUrl: pokemonListResponse.sprites.other?.dream_world?.front_default || '',
+    };
+
+    res.push(pokemon);
+  }
+
+  return res;
+}
+
+export function mapNamedApiToPokemon(pokemonApi: PokemonApi) {
+  return {
+    id: pokemonApi.id,
+    name: pokemonApi.name,
+    baseExperience: pokemonApi.base_experience,
+    height: pokemonApi.height,
+    weight: pokemonApi.weight,
+    order: pokemonApi.order,
+    abilities: pokemonApi.abilities,
+    species: pokemonApi.species,
+    stats: pokemonApi.stats,
+    types: pokemonApi.types,
+    imageUrl: pokemonApi.sprites.other?.dream_world?.front_default || '',
+  } as Pokemon;
 }

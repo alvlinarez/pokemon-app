@@ -1,6 +1,32 @@
 export interface Pokemon {
   id: number;
   name: string;
+  baseExperience: number;
+  height: number;
+  weight: number;
+  order: number;
+  abilities: Ability[];
+  species: NamedAPIResource;
+  stats: Stat[];
+  types: Type[];
+  imageUrl: string;
+}
+
+export interface PokemonListResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: NamedAPIResource[];
+}
+
+export interface NamedAPIResource {
+  name: string;
+  url: string;
+}
+
+export interface PokemonApi {
+  id: number;
+  name: string;
   base_experience: number;
   height: number;
   weight: number;
@@ -23,11 +49,6 @@ export interface Ability {
   ability: NamedAPIResource;
   is_hidden: boolean;
   slot: number;
-}
-
-export interface NamedAPIResource {
-  name: string;
-  url: string;
 }
 
 export interface GameIndex {
@@ -306,11 +327,4 @@ export interface Type {
 export interface PastType {
   generation: NamedAPIResource;
   types: Type[];
-}
-
-export interface PokemonListResponse {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: NamedAPIResource[];
 }
