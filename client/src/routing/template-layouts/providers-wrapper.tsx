@@ -5,6 +5,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorFallback } from '../../components';
 import { ServiceProvider } from '../../providers';
 import { ProvideSnackbar } from '../../providers/provide-snackbar.tsx';
+import { AuthProvider } from '../../providers/auth-provider.tsx';
 
 export function ProvidersWrapper() {
   const queryClient = new QueryClient();
@@ -13,10 +14,12 @@ export function ProvidersWrapper() {
     <ProvideSnackbar>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         <ServiceProvider>
-          <QueryClientProvider client={queryClient}>
-            <App />
-            <ReactQueryDevtools initialIsOpen={false} />
-          </QueryClientProvider>
+          <AuthProvider>
+            <QueryClientProvider client={queryClient}>
+              <App />
+              <ReactQueryDevtools initialIsOpen={false} />
+            </QueryClientProvider>
+          </AuthProvider>
         </ServiceProvider>
       </ErrorBoundary>
     </ProvideSnackbar>

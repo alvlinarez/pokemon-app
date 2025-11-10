@@ -1,8 +1,9 @@
 import { createContext, useContext } from 'react';
-import { PokemonService } from '../services';
+import { AuthService, PokemonService } from '../services';
 
 interface IServiceContext {
   pokemonService: PokemonService;
+  authService: AuthService;
 }
 
 export const ServiceContext = createContext<IServiceContext>({} as IServiceContext);

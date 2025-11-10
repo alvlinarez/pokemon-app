@@ -4,31 +4,59 @@ import { ROUTES } from './routing.ts';
 export const router = createBrowserRouter([
   {
     lazy: async () => {
-      const { ProvidersWrapper } = await import('./template-layouts/providers-wrapper');
+      const { ProvidersWrapper } = await import('./template-layouts');
       return { element: <ProvidersWrapper /> };
     },
     children: [
       {
-        path: ROUTES.pokemons,
+        path: ROUTES.login,
         lazy: async () => {
-          const { PokemonsResolver } = await import('../pages/pokemons/pokemons-resolver');
+          const { Login } = await import('./template-layouts');
           return {
-            element: <PokemonsResolver />,
+            element: <Login redirectRoute={ROUTES.pokemons} />,
           };
         },
       },
       {
-        path: ROUTES.pokemon,
+        path: ROUTES.register,
         lazy: async () => {
-          const { PokemonResolver } = await import('../pages/pokemon/pokemon-resolver');
+          const { Register } = await import('./template-layouts');
           return {
-            element: <PokemonResolver />,
+            element: <Register />,
           };
         },
+      },
+      {
+        lazy: async () => {
+          const { Private } = await import('./template-layouts');
+          return {
+            element: <Private redirectRoute={ROUTES.login} />,
+          };
+        },
+        children: [
+          {
+            path: ROUTES.pokemons,
+            lazy: async () => {
+              const { PokemonsResolver } = await import('../pages/pokemons/pokemons-resolver');
+              return {
+                element: <PokemonsResolver />,
+              };
+            },
+          },
+          {
+            path: ROUTES.pokemon,
+            lazy: async () => {
+              const { PokemonResolver } = await import('../pages/pokemon/pokemon-resolver');
+              return {
+                element: <PokemonResolver />,
+              };
+            },
+          },
+        ],
       },
       {
         path: '*',
-        element: <Navigate to={ROUTES.pokemons} replace />,
+        element: <Navigate to={ROUTES.login} replace />,
       },
     ],
   },
