@@ -10,7 +10,7 @@ interface IAuthContext {
 
 export const AuthContext = createContext<IAuthContext>({
   user: null,
-  isUserLoading: false,
+  isUserLoading: true,
   isUserLoggedIn: false,
 } as IAuthContext);
 

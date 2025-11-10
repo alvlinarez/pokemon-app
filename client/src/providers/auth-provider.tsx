@@ -5,7 +5,7 @@ import type { IUser } from '../types';
 export function AuthProvider({ children }: PropsWithChildren) {
   const { authService } = useService();
   const [user, setUser] = useState<IUser | null>(null);
-  const [isUserLoading, setIsUserLoading] = useState<boolean>(false);
+  const [isUserLoading, setIsUserLoading] = useState<boolean>(true);
 
   const checkAuth = useCallback(async () => {
     try {

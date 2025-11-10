@@ -10,7 +10,7 @@ interface LoginProps {
   redirectRoute: string;
 }
 export function Login({ redirectRoute }: LoginProps) {
-  const { isUserLoggedIn, updateUser } = useAuth();
+  const { isUserLoggedIn, isUserLoading, updateUser } = useAuth();
   const { authService } = useService();
   const navigate = useNavigate();
 
@@ -44,6 +44,10 @@ export function Login({ redirectRoute }: LoginProps) {
       }
     }
   };
+
+  if (isUserLoading) {
+    return <Box>Loading...</Box>;
+  }
 
   if (isUserLoggedIn) {
     return <Navigate to={redirectRoute} replace />;
