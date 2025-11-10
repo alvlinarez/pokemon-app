@@ -6,14 +6,14 @@ interface FilterCollectionProps {
   body?: Partial<CollectionBody>;
   results: NamedAPIResource[];
 }
-export function filterCollection({ body, results }: FilterCollectionProps): NamedAPIResource[] {
+export function filterCollection({ body, results }: FilterCollectionProps): { pokemonCollection: NamedAPIResource[]; pageCount: number } {
   let res: NamedAPIResource[];
 
   const { page, pageSize, sortBy, sortDescending, filterBy } = validateBody(body);
 
   res = filterBy
     ? results.filter((r) => {
-        const id = r.url.split('/')[6];
+        const id = r.url.split('/').pop();
         return (isNaN(Number(filterBy)) && r.name.includes(filterBy)) || id === filterBy;
       })
     : results;
@@ -32,10 +32,12 @@ export function filterCollection({ body, results }: FilterCollectionProps): Name
     }
   }
 
+  const pageCount = filterBy ? res.length : Math.ceil(res.length / pageSize);
+
   // get paginated results
   res = filterBy ? res : res.slice(page * pageSize, page * pageSize + pageSize);
 
-  return res;
+  return { pokemonCollection: res, pageCount };
 }
 
 function validateBody(body?: Partial<CollectionBody>) {
@@ -83,7 +85,7 @@ export async function mapNamedApiCollectionToPokemon(namedAPIResources: NamedAPI
       species: pokemonListResponse.species,
       stats: pokemonListResponse.stats,
       types: pokemonListResponse.types,
-      imageUrl: pokemonListResponse.sprites.other?.dream_world?.front_default || '',
+      imageUrl: pokemonListResponse.sprites.other?.dream_world?.front_default || pokemonListResponse.sprites.other?.home?.front_default || '',
     };
 
     res.push(pokemon);
@@ -104,6 +106,6 @@ export function mapNamedApiToPokemon(pokemonApi: PokemonApi) {
     species: pokemonApi.species,
     stats: pokemonApi.stats,
     types: pokemonApi.types,
-    imageUrl: pokemonApi.sprites.other?.dream_world?.front_default || '',
+    imageUrl: pokemonApi.sprites.other?.dream_world?.front_default || pokemonApi.sprites.other?.home?.front_default || '',
   } as Pokemon;
 }

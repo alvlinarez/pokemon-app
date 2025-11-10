@@ -1,9 +1,9 @@
 import { Grid } from '@mui/material';
 import { PokemonItem } from './pokemon-item';
-import type { NamedAPIResource } from '../../../types';
+import type { Pokemon } from '../../../types';
 
 interface PokemonListProps {
-  pokemons: NamedAPIResource[];
+  pokemons: Pokemon[];
 }
 export function PokemonList({ pokemons }: PokemonListProps) {
   return (

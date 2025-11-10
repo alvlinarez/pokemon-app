@@ -38,9 +38,9 @@ export function PokemonsPage() {
           },
         }}
       >
-        <PokemonList pokemons={data} />
+        <PokemonList pokemons={data.data} />
 
-        <PokemonPagination />
+        <PokemonPagination pageCount={data.pageCount} />
       </Stack>
     </Container>
   );

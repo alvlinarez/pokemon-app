@@ -1,3 +1,5 @@
+import type { PokemonResponse } from './pokemon.ts';
+
 export interface CollectionBody {
   pageSize?: number;
   page?: number;
@@ -12,5 +14,5 @@ export interface GetPokemonsProps {
 }
 
 export interface IPokemonService {
-  getPokemons(props: GetPokemonsProps): Promise<void>;
+  getPokemons(props: GetPokemonsProps): Promise<PokemonResponse>;
 }

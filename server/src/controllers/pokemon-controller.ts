@@ -9,7 +9,7 @@ export const searchPokemons = async (req: CollectionRequest, res: Response, next
     const response = await fetch(`${config.pokemonApiUrl}/pokemon?limit=2000`);
     const pokemonListResponse = (await response.json()) as PokemonListResponse;
 
-    const pokemonCollection = filterCollection({ body: req.body, results: pokemonListResponse.results });
+    const { pokemonCollection, pageCount } = filterCollection({ body: req.body, results: pokemonListResponse.results });
 
     if (!pokemonCollection.length) {
       res.status(404).json({ message: 'No pokemons found.' });
@@ -18,7 +18,7 @@ export const searchPokemons = async (req: CollectionRequest, res: Response, next
 
     const pokemons = await mapNamedApiCollectionToPokemon(pokemonCollection);
 
-    res.status(200).json(pokemons);
+    res.status(200).json({ data: pokemons, pageCount });
   } catch (error) {
     next(error);
   }

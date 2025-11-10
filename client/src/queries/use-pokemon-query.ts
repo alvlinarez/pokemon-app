@@ -1,5 +1,5 @@
 import { useService } from '../context';
-import type { CollectionBody, NamedAPIResource } from '../types';
+import type { CollectionBody, PokemonResponse } from '../types';
 import { useQuery } from '@tanstack/react-query';
 import { useErrorMessage } from '../hooks';
 import { QUERY_KEYS } from '../constants';
@@ -10,14 +10,17 @@ interface UsePokemonQueryProps {
 }
 export function usePokemonQuery({ query, request }: UsePokemonQueryProps) {
   const { pokemonService } = useService();
-  const { data, isFetching, isLoading, isError, error } = useQuery<NamedAPIResource[], Error>({
+  const { data, isFetching, isLoading, isError, error } = useQuery<PokemonResponse, Error>({
     queryKey: [QUERY_KEYS.pokemons, query, request],
     queryFn: () =>
       pokemonService.getPokemons({
         request,
         query,
       }),
-    initialData: [],
+    initialData: {
+      data: [],
+      pageCount: 0,
+    },
     refetchOnWindowFocus: false,
   });
 

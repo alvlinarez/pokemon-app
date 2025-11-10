@@ -2,7 +2,10 @@ import { Pagination, Stack } from '@mui/material';
 import { usePokemonSearch } from '../../context';
 import type { ChangeEvent } from 'react';
 
-export function PokemonPagination() {
+interface PokemonPaginationProps {
+  pageCount: number;
+}
+export function PokemonPagination({ pageCount }: PokemonPaginationProps) {
   const { page, updatePage } = usePokemonSearch();
 
   const handleChange = (_event: ChangeEvent<unknown>, value: number) => {
@@ -12,7 +15,7 @@ export function PokemonPagination() {
   return (
     <Stack spacing={2} width={'100%'} justifyContent={'center'}>
       <Pagination
-        count={10}
+        count={pageCount}
         page={page + 1}
         onChange={handleChange}
         sx={{
