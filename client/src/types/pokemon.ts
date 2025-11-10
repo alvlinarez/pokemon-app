@@ -1,3 +1,5 @@
+export type SortBy = 'number' | 'name';
+
 export interface Pokemon {
   id: number;
   name: string;
@@ -306,11 +308,4 @@ export interface Type {
 export interface PastType {
   generation: NamedAPIResource;
   types: Type[];
-}
-
-export interface PokemonListResponse {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: NamedAPIResource[];
 }

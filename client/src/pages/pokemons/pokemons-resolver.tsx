@@ -1,5 +1,10 @@
 import { PokemonsPage } from './pokemons-page';
+import { PokemonSearchProvider } from '../../providers';
 
 export function PokemonsResolver() {
-  return <PokemonsPage />;
+  return (
+    <PokemonSearchProvider>
+      <PokemonsPage />
+    </PokemonSearchProvider>
+  );
 }

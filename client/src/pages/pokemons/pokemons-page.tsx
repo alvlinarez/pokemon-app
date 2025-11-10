@@ -1,5 +1,11 @@
-import { Box } from '@mui/material';
+import { Container } from '@mui/material';
+import { colors } from '../../util';
+import { SearchBar } from './search-bar';
 
 export function PokemonsPage() {
-  return <Box>Gaaaa</Box>;
+  return (
+    <Container sx={{ background: colors.primary, minHeight: '100vh' }}>
+      <SearchBar />
+    </Container>
+  );
 }
