@@ -2,6 +2,10 @@
 
 A full-stack Pokemon application with user authentication, allowing users to browse Pokemons using the PokeAPI.
 
+
+## Note 📝
+**If you would like to see the Task project built using AI prompting see: [TaskManagement.md](TaskManagement.md)**
+
 ## 📋 Features
 
 - **User Authentication**: Secure JWT-based authentication with HTTP-only cookies
