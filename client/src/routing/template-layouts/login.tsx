@@ -1,6 +1,6 @@
 import { Box, Button, Paper, TextField, Typography } from '@mui/material';
 import { useAuth, useService } from '../../context';
-import { Navigate, useNavigate } from 'react-router';
+import { Navigate, useNavigate, Link } from 'react-router';
 import { colors } from '../../util';
 import { type FormEvent, useState } from 'react';
 import { ROUTES } from '../routing';
@@ -55,7 +55,16 @@ export function Login({ redirectRoute }: LoginProps) {
 
   return (
     <Box bgcolor={colors.primary} height="100vh" display={'flex'} justifyContent={'center'} alignItems={'center'}>
-      <Paper sx={{ padding: 4, textAlign: 'center', width: '40%' }}>
+      <Paper
+        sx={{
+          padding: { xs: 1, lg: 4 },
+          textAlign: 'center',
+          width: {
+            xs: '90%',
+            lg: '40%',
+          },
+        }}
+      >
         <Typography variant={'h3'} fontWeight={'bold'}>
           Login
         </Typography>
@@ -84,6 +93,10 @@ export function Login({ redirectRoute }: LoginProps) {
             Login
           </Button>
         </Box>
+
+        <Typography color={'text'} variant={'body2'} mt={2}>
+          Not having an account? <Link to={ROUTES.register}>Register</Link>
+        </Typography>
       </Paper>
     </Box>
   );
